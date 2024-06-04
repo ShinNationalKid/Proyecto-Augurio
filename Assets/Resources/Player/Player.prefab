@@ -546,8 +546,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04928405, y: -0.0000000058751155}
-  m_Size: {x: 0.49856853, y: 0.25000024}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.1, y: 0.5}
   m_Direction: 1
 --- !u!95 &1892280903190082677
 Animator:
@@ -632,7 +632,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
