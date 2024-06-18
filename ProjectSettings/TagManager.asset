@@ -49,3 +49,9 @@ TagManager:
   - name: Objects
     uniqueID: 4075673365
     locked: 0
+  - name: IridiscentObjects
+    uniqueID: 1927611787
+    locked: 0
+  - name: Special
+    uniqueID: 1274722667
+    locked: 0

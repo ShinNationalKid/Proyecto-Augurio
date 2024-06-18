@@ -14,8 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - Hola, que tal? Soy un test de dialogo
-  responses:
-  - responseText: Hola como andas
-    dialogueObject: {fileID: 11400000, guid: 297d19b4935f37040beb05a1a4f6884d, type: 2}
-  - responseText: No me interesa
-    dialogueObject: {fileID: 11400000, guid: e97eaf4a2852f8349908043fd0ba4933, type: 2}
+  responses: []
