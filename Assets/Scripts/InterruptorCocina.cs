@@ -7,15 +7,12 @@ public class InterruptorCocina : MonoBehaviour, IInteractable
 {
     [SerializeField] private DialogueObject dialogueObject;
     [SerializeField] private GameObject destroyableObject;
+    [SerializeField] private AudioSource dialogoMadre;
+    [SerializeField] private AudioSource sonidoBoton;
 
     private bool timerActive = true;
-    private AudioSource audioSource;
     private bool isActive = true;
 
-    private void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
     public void UpdateDialogueObject(DialogueObject dialogueObject)
     {
         this.dialogueObject = dialogueObject;
@@ -51,9 +48,10 @@ public class InterruptorCocina : MonoBehaviour, IInteractable
         }
         if (isActive) {
         destroyableObject.SetActive(false);
+            sonidoBoton.Play();
         WaitSeconds();
         interactor.DialogueUI.ShowDialogue(dialogueObject);
-        audioSource.Play();
+        dialogoMadre.Play();
         isActive = false;
         }
     }

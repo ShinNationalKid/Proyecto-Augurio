@@ -6,6 +6,10 @@ public class Llaves : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject destroyableObject;
     [SerializeField] private GameObject activableObject;
+    [SerializeField] private AudioSource sonidoLlaves;
+
+    private bool isActive = true;
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Interact") && other.TryGetComponent(out Interactor interactor))
@@ -27,8 +31,12 @@ public class Llaves : MonoBehaviour, IInteractable
 
     public void Interact(Interactor interactor)
     {
+        if (isActive) { 
+        sonidoLlaves.Play();
         destroyableObject.SetActive(false);
         activableObject.SetActive(true);
-        Destroy(gameObject);
+        this.gameObject.SetActive(false);
+        isActive = false;
+        }
     }
 }

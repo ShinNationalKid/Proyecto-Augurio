@@ -17,6 +17,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Interactor interactor;
 
+    [SerializeField] private AudioSource footstepIzq;
+    [SerializeField] private AudioSource footstepDer;
+
+    public bool footstepIzqIsPlayable = false;
+    public bool footstepDerIsPlayable = false;
+
     [SerializeField] private float playerSpeed;
     private Animator playerAnimator;
     private Rigidbody2D playerRigidbody;
@@ -56,6 +62,9 @@ public class Player : MonoBehaviour
     {
         //Physics
         playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
+        
+        playFootstepDer();
+        playFootstepIzq();
     }
 
     void ProcessInputs()
@@ -137,6 +146,28 @@ public class Player : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    void playFootstepDer()
+    {
+        if (footstepDerIsPlayable) 
+        {
+            if(!footstepDer.isPlaying) { 
+            footstepDer.Play();
+            footstepDerIsPlayable = false;
+            }
+        }
+    }
+
+    void playFootstepIzq()
+    {
+        if(footstepIzqIsPlayable)
+        {
+            if(!footstepIzq.isPlaying) { 
+            footstepIzq.Play(); 
+            footstepIzqIsPlayable = false;
+            }
         }
     }
 }
