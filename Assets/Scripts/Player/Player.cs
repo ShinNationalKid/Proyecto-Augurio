@@ -24,8 +24,21 @@ public class Player : MonoBehaviour
     public bool footstepDerIsPlayable = false;
 
     [SerializeField] private float playerSpeed;
+    [SerializeField] private float runMultiplier;
+    [SerializeField] private float staminaMax;
+    [SerializeField] private float staminaOverSecond;
+    [SerializeField] private float staminaDelay;
+
+    private bool isRunning = false;
+
+    public float staminaTimer = 0 ;
+    public float currentStamina;
+    public bool canRun = true;
+    public bool canStaminaIncrease = true;
+
     private Animator playerAnimator;
     private Rigidbody2D playerRigidbody;
+
     [SerializeField] private GameObject direction;
     private Vector2 playerDirection;
     private String facingDirection = "down";
@@ -39,6 +52,7 @@ public class Player : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
+        currentStamina = staminaMax;
     }
 
     // Update is called once per frame
@@ -56,13 +70,49 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("lasthorizontal", lastmoveX);
         playerAnimator.SetFloat("lastvertical", lastmoveY);
         playerAnimator.SetFloat("speed", playerDirection.sqrMagnitude);
+        playerAnimator.SetBool("running", isRunning);
     }
 
     void FixedUpdate()
     {
         //Physics
-        playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
-        
+
+        if (Input.GetKey(KeyCode.LeftShift) && canRun)
+        {
+            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * runMultiplier * Time.fixedDeltaTime);
+            currentStamina -= 1 ;
+            staminaTimer = 0;
+            canStaminaIncrease = false;
+            isRunning = true;
+        }
+        else
+        {
+            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
+            isRunning = false;
+        }
+
+        staminaTimer += Time.deltaTime;
+        if (staminaTimer >= staminaDelay)
+        {
+            canStaminaIncrease = true;
+        }
+        if (canStaminaIncrease)
+        {
+            if (currentStamina <= staminaMax)
+            {
+                currentStamina += 1 ;
+            }
+        }
+
+        if (currentStamina <= 0)
+        {
+            canRun = false;
+        }
+        else
+        {
+            canRun = true;
+        }
+
         playFootstepDer();
         playFootstepIzq();
     }

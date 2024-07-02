@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Interactor
   - Interact
+  - Cemento
+  - Grass
+  - Dirt
+  - Water
   layers:
   - Default
   - TransparentFX
