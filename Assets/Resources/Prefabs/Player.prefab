@@ -611,6 +611,14 @@ MonoBehaviour:
   footstepIzqIsPlayable: 0
   footstepDerIsPlayable: 0
   playerSpeed: 3
+  runMultiplier: 2
+  staminaMax: 300
+  staminaOverSecond: 0
+  staminaDelay: 4
+  staminaTimer: 0
+  currentStamina: 0
+  canRun: 1
+  canStaminaIncrease: 1
   direction: {fileID: 5334598678414881074}
 --- !u!50 &4302181601041668866
 Rigidbody2D:

@@ -178643,7 +178643,7 @@ PrefabInstance:
       objectReference: {fileID: 1108681166}
     - target: {fileID: 469209960550502336, guid: 9dde03704db551c4a963324320716795, type: 3}
       propertyPath: WhatScene
-      value: Menu
+      value: Act2
       objectReference: {fileID: 0}
     - target: {fileID: 4065202751267017642, guid: 9dde03704db551c4a963324320716795, type: 3}
       propertyPath: m_LocalPosition.x
@@ -181599,6 +181599,26 @@ PrefabInstance:
       propertyPath: dialogueUI
       value: 
       objectReference: {fileID: 410774415}
+    - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
+      propertyPath: staminaMax
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
+      propertyPath: staminaDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
+      propertyPath: staminaTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
+      propertyPath: runMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
+      propertyPath: currentStamina
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7105049277112729498, guid: ad21f675242d1c444a42fa648d244bf0, type: 3}
       propertyPath: footstepDerIsPlayable
       value: 0
@@ -200287,8 +200307,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -1.1895499, y: -2.5415998, z: 0}
-    m_Extent: {x: 13.80175, y: 11.6873, z: 0}
+    m_Center: {x: -1.1840496, y: -2.5384002, z: 0}
+    m_Extent: {x: 13.79595, y: 11.6947, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
