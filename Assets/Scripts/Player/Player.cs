@@ -139,4 +139,116 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    void playFootstepDer()
+    {
+        if (footstepDerIsPlayable)
+        {
+            if (!footstepDer.isPlaying)
+            {
+                footstepDer.Play();
+                footstepDerIsPlayable = false;
+            }
+        }
+    }
+
+    void playFootstepIzq()
+    {
+        if (footstepIzqIsPlayable)
+        {
+            if (!footstepIzq.isPlaying)
+            {
+                footstepIzq.Play();
+                footstepIzqIsPlayable = false;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Light"))
+        {
+            isUnderLight = true;
+        }
+
+        if (collision.CompareTag("Monster"))
+        {
+            KillPlayer();
+        }
+
+        if (collision.CompareTag("SafeZone"))
+        {
+            isInSafeZone = true;
+        }
+
+        if (collision.CompareTag("ConstantSafeZone"))
+        {
+            isInConstantSafeZone = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Light"))
+        {
+            isUnderLight = false;
+        }
+
+        if (collision.CompareTag("SafeZone"))
+        {
+            isInSafeZone = false;
+        }
+
+        if (collision.CompareTag("ConstantSafeZone"))
+        {
+            isInConstantSafeZone = false;
+        }
+    }
+
+    public bool getIsUnderLight()
+    {
+        return isUnderLight;
+    }
+
+    public void KillPlayer()
+    {
+        SceneManager.LoadScene("Act2");
+
+    }
+
+    public void FullStop()
+    {
+        playerRigidbody.velocity = Vector3.zero;
+        playerRigidbody.angularVelocity = 0;
+
+        playerRigidbody.Sleep();
+        moveX = 0;
+        moveY = 0;
+        isRunning = false;
+        playerAnimator.SetFloat("horizontal", moveX);
+        playerAnimator.SetFloat("vertical", moveY);
+        playerAnimator.SetFloat("lasthorizontal", lastmoveX);
+        playerAnimator.SetFloat("lastvertical", lastmoveY);
+        playerAnimator.SetFloat("speed", 0);
+        playerAnimator.SetBool("running", isRunning);
+    }
+
+    public bool getIsInSafeZone()
+        {
+            return isInSafeZone;
+        }
+
+    public bool getIsInConstantSafeZone()
+    {
+        return isInConstantSafeZone;
+    }
+
+    private void ActivateSafeZones()
+    {
+        safeZones.SetActive(true);
+        mustActivateSafeZone = false;
+    }
+
+>>>>>>> Stashed changes
 }
