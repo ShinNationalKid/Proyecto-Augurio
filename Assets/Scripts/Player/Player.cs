@@ -75,6 +75,11 @@ public class Player : MonoBehaviour
         //Processing inputs
         ProcessInputs();
 
+        if (mustActivateSafeZone)
+        {
+            ActivateSafeZones();
+        }
+
         //Sending animations parameters
         playerAnimator.SetFloat("horizontal", moveX);
         playerAnimator.SetFloat("vertical", moveY);
@@ -86,6 +91,12 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Physics
+
+        if (dialogueUI.IsOpen)
+        {
+            FullStop();
+            return;
+        }
         playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
     }
 
@@ -260,7 +271,7 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("lasthorizontal", lastmoveX);
         playerAnimator.SetFloat("lastvertical", lastmoveY);
         playerAnimator.SetFloat("speed", 0);
-        playerAnimator.SetBool("running", isRunning);
+        playerAnimator.SetBool("isRunning", isRunning);
     }
 
     public bool getIsInSafeZone()
