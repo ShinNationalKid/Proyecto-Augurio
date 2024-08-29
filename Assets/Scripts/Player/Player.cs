@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static System.Net.WebRequestMethods;
 using static Unity.Burst.Intrinsics.X86;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private AudioSource footstepIzq;
     [SerializeField] private AudioSource footstepDer;
+    [SerializeField] private GameObject safeZones;
 
     public bool footstepIzqIsPlayable = false;
     public bool footstepDerIsPlayable = false;
@@ -28,13 +30,19 @@ public class Player : MonoBehaviour
     [SerializeField] private float staminaMax;
     [SerializeField] private float staminaOverSecond;
     [SerializeField] private float staminaDelay;
+    [SerializeField]
+    private bool isInSafeZone = true;
+    [SerializeField]
+    private bool isInConstantSafeZone = true;
+
+    public bool isUnderLight;
 
     private bool isRunning = false;
 
-    public float staminaTimer = 0 ;
-    public float currentStamina;
-    public bool canRun = true;
-    public bool canStaminaIncrease = true;
+    private float staminaTimer = 0;
+    private float currentStamina;
+    private bool canRun = true;
+    private bool canStaminaIncrease = true;
 
     private Animator playerAnimator;
     private Rigidbody2D playerRigidbody;
@@ -47,12 +55,15 @@ public class Player : MonoBehaviour
     private float moveX;
     private float moveY;
 
+    public bool mustActivateSafeZone = false;
+    [SerializeField]
+    private SceneManager sceneManager;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
-        currentStamina = staminaMax;
     }
 
     // Update is called once per frame
@@ -70,51 +81,12 @@ public class Player : MonoBehaviour
         playerAnimator.SetFloat("lasthorizontal", lastmoveX);
         playerAnimator.SetFloat("lastvertical", lastmoveY);
         playerAnimator.SetFloat("speed", playerDirection.sqrMagnitude);
-        playerAnimator.SetBool("running", isRunning);
     }
 
     void FixedUpdate()
     {
         //Physics
-
-        if (Input.GetKey(KeyCode.LeftShift) && canRun)
-        {
-            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * runMultiplier * Time.fixedDeltaTime);
-            currentStamina -= 1 ;
-            staminaTimer = 0;
-            canStaminaIncrease = false;
-            isRunning = true;
-        }
-        else
-        {
-            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
-            isRunning = false;
-        }
-
-        staminaTimer += Time.deltaTime;
-        if (staminaTimer >= staminaDelay)
-        {
-            canStaminaIncrease = true;
-        }
-        if (canStaminaIncrease)
-        {
-            if (currentStamina <= staminaMax)
-            {
-                currentStamina += 1 ;
-            }
-        }
-
-        if (currentStamina <= 0)
-        {
-            canRun = false;
-        }
-        else
-        {
-            canRun = true;
-        }
-
-        playFootstepDer();
-        playFootstepIzq();
+        playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
     }
 
     void ProcessInputs()
@@ -201,23 +173,109 @@ public class Player : MonoBehaviour
 
     void playFootstepDer()
     {
-        if (footstepDerIsPlayable) 
+        if (footstepDerIsPlayable)
         {
-            if(!footstepDer.isPlaying) { 
-            footstepDer.Play();
-            footstepDerIsPlayable = false;
+            if (!footstepDer.isPlaying)
+            {
+                footstepDer.Play();
+                footstepDerIsPlayable = false;
             }
         }
     }
 
     void playFootstepIzq()
     {
-        if(footstepIzqIsPlayable)
+        if (footstepIzqIsPlayable)
         {
-            if(!footstepIzq.isPlaying) { 
-            footstepIzq.Play(); 
-            footstepIzqIsPlayable = false;
+            if (!footstepIzq.isPlaying)
+            {
+                footstepIzq.Play();
+                footstepIzqIsPlayable = false;
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Light"))
+        {
+            isUnderLight = true;
+        }
+
+        if (collision.CompareTag("Monster"))
+        {
+            KillPlayer();
+        }
+
+        if (collision.CompareTag("SafeZone"))
+        {
+            isInSafeZone = true;
+        }
+
+        if (collision.CompareTag("ConstantSafeZone"))
+        {
+            isInConstantSafeZone = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Light"))
+        {
+            isUnderLight = false;
+        }
+
+        if (collision.CompareTag("SafeZone"))
+        {
+            isInSafeZone = false;
+        }
+
+        if (collision.CompareTag("ConstantSafeZone"))
+        {
+            isInConstantSafeZone = false;
+        }
+    }
+
+    public bool getIsUnderLight()
+    {
+        return isUnderLight;
+    }
+
+    public void KillPlayer()
+    {
+        SceneManager.LoadScene("Act2");
+
+    }
+
+    public void FullStop()
+    {
+        playerRigidbody.velocity = Vector3.zero;
+        playerRigidbody.angularVelocity = 0;
+
+        playerRigidbody.Sleep();
+        moveX = 0;
+        moveY = 0;
+        isRunning = false;
+        playerAnimator.SetFloat("horizontal", moveX);
+        playerAnimator.SetFloat("vertical", moveY);
+        playerAnimator.SetFloat("lasthorizontal", lastmoveX);
+        playerAnimator.SetFloat("lastvertical", lastmoveY);
+        playerAnimator.SetFloat("speed", 0);
+        playerAnimator.SetBool("running", isRunning);
+    }
+
+    public bool getIsInSafeZone()
+        {
+            return isInSafeZone;
+        }
+
+    public bool getIsInConstantSafeZone()
+    {
+        return isInConstantSafeZone;
+    }
+
+    private void ActivateSafeZones()
+    {
+        safeZones.SetActive(true);
+        mustActivateSafeZone = false;
     }
 }

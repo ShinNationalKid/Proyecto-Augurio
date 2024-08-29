@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7729f60fd5b57f84ca5794999bf70644, type: 3}
+  m_Name: NPC0 Dialogo
+  m_EditorClassIdentifier: 
+  dialogue:
+  - "Segui derecho y ten\xE9 cuidado amigo.\n"
+  responses:
+  - responseText: De una, gracias loco.
+    dialogueObject: {fileID: 11400000, guid: 8de8681f8a623c94699c945ab1cbf0da, type: 2}
+  - responseText: Tranqui que tengo como defenderme.
+    dialogueObject: {fileID: 11400000, guid: 5e089f0119717454793382990f2bd396, type: 2}

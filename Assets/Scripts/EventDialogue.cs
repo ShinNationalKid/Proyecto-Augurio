@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,9 @@ public class EventDialogue : MonoBehaviour
     [SerializeField]
     private DialogueObject dialogueObject;
 
+    [SerializeField]
+    private Player player;
+
     [SerializeField] private DialogueUI dialogueUI;
     public DialogueUI DialogueUI => dialogueUI;
 
@@ -16,23 +20,34 @@ public class EventDialogue : MonoBehaviour
 
     private bool activated;
 
+    private bool canBeActivated=true;
+
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isOneTime)
-        {
-            StartDialogue();
-        }
-        else 
-        {
-            if (!activated)
+        if (other.CompareTag("Player") && canBeActivated) { 
+            if (isOneTime)
             {
-                activated = true;
                 StartDialogue();
+                canBeActivated = false;
+            }
+            else 
+            {
+                if (!dialogueUI.IsOpen)
+                {
+                    activated = false;
+                }
+                if (!activated)
+                {
+                    activated = true;
+                    StartDialogue();
+                }
             }
         }
     }
     private void StartDialogue()
     {
+        player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        player.FullStop();
         dialogueUI.ShowDialogue(dialogueObject);
     }
 }

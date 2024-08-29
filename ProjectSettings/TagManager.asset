@@ -10,6 +10,12 @@ TagManager:
   - Grass
   - Dirt
   - Water
+  - Light
+  - Monster
+  - Decoration
+  - MonsterTeleportLimit
+  - SafeZone
+  - ConstantSafeZone
   layers:
   - Default
   - TransparentFX

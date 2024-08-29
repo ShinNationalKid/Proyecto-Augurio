@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7729f60fd5b57f84ca5794999bf70644, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: 
+  dialogue:
+  - "\xBFD\xF3nde me dej\xF3 este tipo? Deber\xEDa aprovechar y preguntarle....\r"
+  - "Es mi suerte nom\xE1s...\r"
+  - "No conf\xEDo mucho, pero tal vez pueda preguntarle a este tipo como llegar...\r"
+  responses: []
