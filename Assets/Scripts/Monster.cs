@@ -187,7 +187,6 @@ public class Monster: MonoBehaviour
             if (collision.CompareTag("Decoration"))
             {
                 currentSpeed = slowedSpeed;
-                Debug.Log("pilinazo");
             }
         }
         if (isTeleporting)
@@ -208,7 +207,6 @@ public class Monster: MonoBehaviour
             if (collision.CompareTag("Decoration"))
             {
                 currentSpeed = moveSpeed;
-                Debug.Log("una poronga");
             }
         }
     }

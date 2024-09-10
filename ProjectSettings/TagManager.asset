@@ -16,6 +16,7 @@ TagManager:
   - MonsterTeleportLimit
   - SafeZone
   - ConstantSafeZone
+  - Fog
   layers:
   - Default
   - TransparentFX

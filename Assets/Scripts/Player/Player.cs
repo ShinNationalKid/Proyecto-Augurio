@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
         //Processing inputs
         ProcessInputs();
 
-        if (mustActivateSafeZone)
+        if (mustActivateSafeZone && !isInSafeZone)
         {
             ActivateSafeZones();
         }
@@ -97,7 +97,46 @@ public class Player : MonoBehaviour
             FullStop();
             return;
         }
-        playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
+
+
+        if (Input.GetKey(KeyCode.LeftShift) && canRun)
+        {
+            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * runMultiplier * Time.fixedDeltaTime);
+            currentStamina -= 1;
+            staminaTimer = 0;
+            canStaminaIncrease = false;
+            isRunning = true;
+        }
+        else
+        {
+            playerRigidbody.MovePosition(playerRigidbody.position + playerDirection * playerSpeed * Time.fixedDeltaTime);
+            isRunning = false;
+        }
+
+        staminaTimer += Time.deltaTime;
+        if (staminaTimer >= staminaDelay)
+        {
+            canStaminaIncrease = true;
+        }
+        if (canStaminaIncrease)
+        {
+            if (currentStamina <= staminaMax)
+            {
+                currentStamina += 1;
+            }
+        }
+
+        if (currentStamina <= 0)
+        {
+            canRun = false;
+        }
+        else
+        {
+            canRun = true;
+        }
+
+        playFootstepDer();
+        playFootstepIzq();
     }
 
     void ProcessInputs()
@@ -275,9 +314,9 @@ public class Player : MonoBehaviour
     }
 
     public bool getIsInSafeZone()
-        {
-            return isInSafeZone;
-        }
+    {
+        return isInSafeZone;
+    }
 
     public bool getIsInConstantSafeZone()
     {
